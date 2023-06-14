@@ -114,12 +114,21 @@
     				var userName=$("#login-username").val();
 	    			var passWord=$("#login-password").val();
 	    			$.ajax({
-	    				type:"post",
-	    				url:"http://localhost:8080/powers/pow/regUsers", /*自己的服务器地址 */
+	    				type:"POST",
+	    				url:"../php/login.php", /*自己的服务器地址 */
 	    				data:{"userName":userName,"passWord":passWord},
 	    				async:true,
 	    				success:function(res){
-	    					alert(res);
+	    					var response = JSON.parse(res);
+							if (response.identity === 'student') {
+								window.location.href = 'student_interface.html';
+							}
+							else if (response.identity === 'leader'){
+								window.location.href = 'leader_interface.html';
+							}
+							else if (response.identity === 'dormitory_manager'){
+								window.location.href = 'dormitory_manager.html';
+							}
 	    				},
 						error:function(error){
 							var errorMessage = "请求发生错误，请稍后重试！";
